@@ -7,6 +7,7 @@ on:
 
 env:
   HOME: /root
+  ENV: ${{ vars.ENV }}
   WEB_UI_URL: ${{ secrets.WEB_UI_URL }}
 
 jobs:
@@ -18,6 +19,10 @@ jobs:
       image: mcr.microsoft.com/playwright:v1.58.0-noble
     steps:
     - uses: actions/checkout@v4
+    - name: Setup .env file
+      run: |
+        mkdir -p .env
+        echo "WEB_UI_URL=$WEB_UI_URL" >> .env/$ENV.env
     - uses: actions/setup-node@v4
       with:
         node-version: lts/*
