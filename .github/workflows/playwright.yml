@@ -6,6 +6,7 @@ on:
     branches: [ main, master ]
 
 env:
+  HOME: /root
   WEB_UI_URL: ${{ secrets.WEB_UI_URL }}
 
 jobs:
