@@ -12,7 +12,7 @@ export class SearchPage {
         this.page = page;
         this.searchResults = this.page.locator('ul[class="srp-results srp-list clearfix"]');
         this.minPriceField = this.page.getByRole('textbox', { name: 'Minimum Value in $' });
-        this.maxPriceField = this.page.getByRole('textbox', { name: 'Maximum Value in $' });
+        this.maxPriceField = this.page.getByRole('textbox', { name: 'Maximum Value in $' })
         this.submitRangeButton = this.page.getByRole('button', { name: 'Submit price range' });
     };
 
@@ -26,9 +26,9 @@ export class SearchPage {
         );
     };
 
-    async waitForUserAcquisition(){
+    async waitForGoogleCollect(){
         return  this.page.waitForResponse(response =>
-                response.url().includes('useracquisition') && response.status() === 200
+                response.url().includes('/ccm/collect') && response.status() === 200
         );
     };
 
@@ -43,16 +43,16 @@ export class SearchPage {
     };
 
     async fillMaxPriceTextField(price: string){
-        await this.minPriceField.pressSequentially(price);
+        await this.maxPriceField.pressSequentially(price);
     };
 
     async clickSubmitRangeButton(){
         await this.submitRangeButton.click();
     };
 
-    async collectSearchResults(range: number){
+    async collectSearchResults(range: number, text: string){
         const collectedResults: (string | null)[] = Array()
-        const resultsList = this.searchResults.locator('li');
+        const resultsList = this.searchResults.locator('li').filter({hasText : text});
         for (let i=0; i<range; i++){
             collectedResults.push(  await resultsList.nth(i)
                                     .locator('span[class="su-styled-text primary default"]')

@@ -12,7 +12,7 @@ export class HomePage {
     };
 
     async goto() {
-        await this.page.goto(process.env.WEB_UI_URL || '');
+        await this.page.goto('');
     };
 
     async typeProductToSearchBox(product: string) {
