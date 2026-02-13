@@ -22,7 +22,7 @@ test.describe('Search and filter functionality Test Suite', () => {
                 await homePage.searchForCategory(product.ITEM_CATEGORY);
                 await searchPage.filterForBrand(product.ITEM_BRAND);
                 await expect(searchPage.searchResults).toBeVisible(); //Step 6: Validate that search results are loaded
-                const targetProduct = await searchPage.selectSearchResultByNumber('0');
+                const targetProduct = await searchPage.selectSearchResultByNumber(0);
                 const [newTab] = await Promise.all([
                     searchPage.page.waitForEvent('popup'),
                     searchPage.clickOnTargetProduct(targetProduct)
@@ -51,7 +51,7 @@ test.describe('Search and filter functionality Test Suite', () => {
                 await homePage.searchForCategory(product.ITEM_CATEGORY);
                 await searchPage.filterForBrand(product.ITEM_BRAND);
                 await expect(searchPage.searchResults).toBeVisible(); //Step 6: Validate that search results are loaded
-                const targetProduct = await searchPage.selectSearchResultByNumber('1');
+                const targetProduct = await searchPage.selectSearchResultByNumber(1);
                 const [newTab] = await Promise.all([
                     searchPage.page.waitForEvent('popup'),
                     searchPage.clickOnTargetProduct(targetProduct)

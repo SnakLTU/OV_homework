@@ -39,9 +39,9 @@ export class SearchPage {
         await this.submitRangeButton.click();
     };
 
-    async selectSearchResultByNumber(num: string){
+    async selectSearchResultByNumber(num: number){
         const resultsList = this.searchResults.locator('li');
-        return resultsList.nth(Number(num));
+        return resultsList.nth(num);
     };
 
     async clickOnTargetProduct(loc: Locator){

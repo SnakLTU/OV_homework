@@ -6,10 +6,12 @@ export class HomePage {
     readonly searchBox: Locator;
     readonly searchButton: Locator;
 
+
     constructor(page: Page) {
         this.page = page;
         this.searchBox = page.getByPlaceholder('Search for anything')
         this.searchButton = page.locator('#gh-search-btn')
+        
     };
 
     async goto() {
@@ -24,6 +26,8 @@ export class HomePage {
     async clickSearchButton() {
         await this.searchButton.click()
     };
+
+
 
     async searchForCategory(category: string){
         const pageLoadRequestCategory = waitForPageLoad(this.page, `_nkw=${category}&`); //Initiate even wait

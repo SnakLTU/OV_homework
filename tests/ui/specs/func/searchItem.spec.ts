@@ -78,12 +78,12 @@ test.describe('Search and filter functionality Test Suite', () => {
                 await homePage.searchForCategory(product.ITEM_CATEGORY);
                 await searchPage.submitMinMaxPrice({minPrice: product.MIN_PRICE, 
                                                     maxPrice: product.MAX_PRICE
-                                                })
-                await expect(searchPage.searchResults).toBeVisible() //Step 12: Validate that search results are loaded
-                const searchResultPrices = await searchPage.collectSearchResultPrices(10) //Step 13: Validate price values
+                                                });
+                await expect(searchPage.searchResults).toBeVisible(); //Step 12: Validate that search results are loaded
+                const searchResultPrices = await searchPage.collectSearchResultPrices(10); //Step 13: Validate price values
                 searchResultPrices.forEach(price => {
-                    expect(price).toBeGreaterThan(Number(product.MIN_PRICE))
-                    expect(price).toBeLessThan(Number(product.MAX_PRICE))
+                    expect(price).toBeGreaterThan(Number(product.MIN_PRICE));
+                    expect(price).toBeLessThan(Number(product.MAX_PRICE));
                 });
             }
         );

@@ -11,6 +11,11 @@ export class ProductPage {
     readonly collorDropDown: Locator;
     readonly chooseCollorDropDown: Locator;
     readonly seeInCartButton: Locator;
+    readonly closeAddToCartDialogButton: Locator;
+    readonly dialogHeaderAddedToCart: Locator;
+    readonly headerCartWithOneItems: Locator;
+    readonly cartRemoveItemButton: Locator;
+    readonly headerCartEmpty: Locator;
 
 
     constructor(page: Page) {
@@ -18,10 +23,15 @@ export class ProductPage {
         this.buyItNowButton = this.page.getByText('Buy It Now');
         this.addToCartButton = this.page.getByText('Add to cart');
         this.addToWatchlist = this.page.getByText('Add to Watchlist');
+        this.dialogHeaderAddedToCart = this.page.getByText('Added to cart');
         this.checkoutAsGuestLink = this.page.getByRole('link', { name: 'Check out as guest' });
         this.collorDropDown = this.page.getByRole('button', { name: 'Color: Select' });
         this.chooseCollorDropDown = this.page.getByRole('button', { name: 'Choose Colour: Select' });
-        this.seeInCartButton = this.page.getByRole('link', { name: 'See in cart' })
+        this.seeInCartButton = this.page.getByRole('link', { name: 'See in cart' });
+        this.closeAddToCartDialogButton = this.page.getByRole('button', { name: 'Close dialog' });
+        this.headerCartWithOneItems = page.getByRole('link', { name: 'Your shopping cart contains 1' });
+        this.headerCartEmpty = page.getByRole('heading', { name: 'Your cart is empty' })
+        this.cartRemoveItemButton = page.locator('button[class="gh_info__delete"]')
     };
 
     async clickBuyNow() {
@@ -52,6 +62,22 @@ export class ProductPage {
         await this.clickCheckoutAsGuestLink();
     };
 
+    async clickCloseAddToCartDialog(){
+        await this.closeAddToCartDialogButton.click();
+    };
+
+    async hoverOverActiveCart() {
+        await this.headerCartWithOneItems.hover()
+    };
+
+    async waitForCartToLoad() {
+        await expect(this.page.getByText('Loading...')).toBeHidden()
+    };
+
+    async clickRemoveItemFromCart(){
+        await this.cartRemoveItemButton.click()
+    }
+
     async checkCAPTCHA(){
         return await checkForCAPTCHA(this.page);
     };
@@ -69,6 +95,16 @@ export class ProductPage {
         }
         return true;
     };
+
+    async removeItemFromCart(){
+        await expect(this.dialogHeaderAddedToCart).toBeHidden();
+        await this.hoverOverActiveCart();
+        await this.waitForCartToLoad();
+        await expect(this.cartRemoveItemButton).toBeVisible();
+        await this.clickRemoveItemFromCart();
+        await expect(this.headerCartWithOneItems).toBeHidden();
+        await expect(this.headerCartEmpty).toBeVisible();
+    }
 
 
 };
