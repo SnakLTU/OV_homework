@@ -8,6 +8,8 @@ on:
 env:
   ENV: ${{ vars.ENV }}
   WEB_UI_URL: ${{ secrets.WEB_UI_URL }}
+  API_URL: ${{ secrets.API_URL }}
+  API_KEY: ${{ secrets.API_KEY }}
 
 jobs:
   playwright-tests:
@@ -28,7 +30,7 @@ jobs:
     - name: Install Playwright Browsers
       run: npx playwright install --with-deps
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npm run test-ci-cd-all
     - uses: actions/upload-artifact@v4
       if: ${{ !cancelled() }}
       with:

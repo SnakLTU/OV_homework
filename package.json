@@ -3,7 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test-ui": "npx playwright test tests/ui",
+    "test-ui-c": "npx playwright test tests/ui --project=chromium",
+    "test-ui-f": "npx playwright test tests/ui --project=firefox",
+    "test-api": "npx playwright test tests/api --project=chromium --workers=1",
+    "test-ci-cd-ui": "npx playwright test tests/ui --retries=3",
+    "test-ci-cd-api": "npx playwright test tests/api --project=chromium --workers=1 --retries=3",
+    "test-ci-cd-all": "npm run test-ci-cd-ui && npm run test-ci-cd-api"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SnakLTU/OV_homework.git"
@@ -17,6 +25,7 @@
   },
   "homepage": "https://github.com/SnakLTU/OV_homework#readme",
   "devDependencies": {
+    "@faker-js/faker": "^10.3.0",
     "@playwright/test": "^1.58.2",
     "@types/node": "^25.2.2"
   },
