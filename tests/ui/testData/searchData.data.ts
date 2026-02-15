@@ -3,14 +3,14 @@ import path from 'path';
 import { parse } from 'csv-parse/sync';
 
 interface product {
-    ITEM_CATEGORY: string
-    ITEM_BRAND: string
-    MIN_PRICE: string
-    MAX_PRICE: string
-    PRODUCT_NUMBER: string
-}
+    ITEM_CATEGORY: string;
+    ITEM_BRAND: string;
+    MIN_PRICE: string;
+    MAX_PRICE: string;
+    PRODUCT_NUMBER: string;
+};
 
-interface searchData extends Array<product>{}
+interface searchData extends Array<product>{};
 
 
 const records = parse(fs.readFileSync(
@@ -20,7 +20,7 @@ const records = parse(fs.readFileSync(
 });
 
 
-export const searchData = records as searchData
+export const searchData = records as searchData;
 
 
 

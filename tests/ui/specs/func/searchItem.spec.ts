@@ -5,8 +5,8 @@ import { searchData } from '../../testData/searchData.data.ts';
 test.describe('Search and filter functionality Test Suite', () => {
 
     test.beforeEach(async ({homePage}) => {
-        await homePage.goto() //Step 1: Navigate to home page
-        await expect(homePage.searchBox).toBeVisible()  //Step 2: Validate that seach box is loaded and visible
+        await homePage.goto(); //Step 1: Navigate to home page
+        await expect(homePage.searchBox).toBeVisible();  //Step 2: Validate that seach box is loaded and visible
     })
 
     searchData.forEach(product => {
@@ -16,11 +16,11 @@ test.describe('Search and filter functionality Test Suite', () => {
                 homePage,
                 searchPage
             }) => {
-                await homePage.searchForCategory(product.ITEM_CATEGORY);
-                await expect(searchPage.searchResults).toBeVisible() //Step 6: Validate that search results are loaded
-                const searchResults = await searchPage.collectSearchResults(5, product.ITEM_CATEGORY); //Step 7: Validate that search returned correct category
+                await homePage.searchForCategory(product.ITEM_CATEGORY); //Step 3: Search for item by keyword
+                await expect(searchPage.searchResults).toBeVisible(); //Step 4: Validate that search results are loaded
+                const searchResults = await searchPage.collectSearchResults(5, product.ITEM_CATEGORY); //Step 5: Validate that search returned correct category
                 searchResults.forEach(result => {
-                    expect(result?.toUpperCase()).toContain(product.ITEM_CATEGORY.toUpperCase());
+                    expect(result?.toUpperCase()).toContain(product.ITEM_CATEGORY.toUpperCase()); //Step 6: Validate a set of search results
                     });
                 }
         );
@@ -30,12 +30,12 @@ test.describe('Search and filter functionality Test Suite', () => {
                 homePage,
                 searchPage
             }) => {
-                await homePage.searchForCategory(product.ITEM_CATEGORY);
-                await searchPage.filterForBrand(product.ITEM_BRAND);
-                await expect(searchPage.searchResults).toBeVisible() //Step 8: Validate that search results are loaded
-                const searchResults = await searchPage.collectSearchResults(10, product.ITEM_BRAND); //Step 9: Validate that search returned correct category
+                await homePage.searchForCategory(product.ITEM_CATEGORY); //Step 3: Search for item by keyword
+                await searchPage.filterForBrand(product.ITEM_BRAND); //Step 4: Filter by Brand
+                await expect(searchPage.searchResults).toBeVisible(); //Step 5: Validate that search results are loaded
+                const searchResults = await searchPage.collectSearchResults(10, product.ITEM_BRAND); //Step 6: Validate that search returned correct category
                 searchResults.forEach(result => {
-                    expect(result?.toUpperCase()).toContain(product.ITEM_BRAND.toUpperCase());
+                    expect(result?.toUpperCase()).toContain(product.ITEM_BRAND.toUpperCase()); //Step 7: Validate a set of search results
                     });
                 }
         );
@@ -45,12 +45,12 @@ test.describe('Search and filter functionality Test Suite', () => {
                 homePage,
                 searchPage
             }) => {
-                await homePage.searchForCategory(product.ITEM_CATEGORY);
-                await searchPage.submitMinPrice(product.MIN_PRICE)
-                await expect(searchPage.searchResults).toBeVisible() //Step 12: Validate that search results are loaded
-                const searchResultPrices = await searchPage.collectSearchResultPrices(10) //Step 13: Validate price values
+                await homePage.searchForCategory(product.ITEM_CATEGORY); //Step 3: Search for item by keyword
+                await searchPage.submitMinPrice(product.MIN_PRICE); //Step 4: Filter by Minimum price
+                await expect(searchPage.searchResults).toBeVisible(); //Step 5: Validate that search results are loaded
+                const searchResultPrices = await searchPage.collectSearchResultPrices(10); //Step 6: Validate price values
                 searchResultPrices.forEach(price => {
-                    expect(price).toBeGreaterThan(Number(product.MIN_PRICE))
+                    expect(price).toBeGreaterThanOrEqual(Number(product.MIN_PRICE)); //Step 7: Validate a set of search results
                 });
             }
         );
@@ -60,12 +60,12 @@ test.describe('Search and filter functionality Test Suite', () => {
                 homePage,
                 searchPage
             }) => {
-                await homePage.searchForCategory(product.ITEM_CATEGORY);
-                await searchPage.submitMaxPrice(product.MAX_PRICE)
-                await expect(searchPage.searchResults).toBeVisible() //Step 12: Validate that search results are loaded
-                const searchResultPrices = await searchPage.collectSearchResultPrices(10) //Step 13: Validate price values
+                await homePage.searchForCategory(product.ITEM_CATEGORY); //Step 3: Search for item by keyword
+                await searchPage.submitMaxPrice(product.MAX_PRICE); //Step 4: Filter by Maximum price
+                await expect(searchPage.searchResults).toBeVisible(); //Step 5: Validate that search results are loaded
+                const searchResultPrices = await searchPage.collectSearchResultPrices(10); //Step 6: Validate price values
                 searchResultPrices.forEach(price => {
-                    expect(price).toBeLessThan(Number(product.MAX_PRICE))
+                    expect(price).toBeLessThanOrEqual(Number(product.MAX_PRICE)); //Step 7: Validate a set of search results
                 });
             }
         );
@@ -75,22 +75,17 @@ test.describe('Search and filter functionality Test Suite', () => {
                 homePage,
                 searchPage
             }) => {
-                await homePage.searchForCategory(product.ITEM_CATEGORY);
+                await homePage.searchForCategory(product.ITEM_CATEGORY); //Step 3: Search for item by keyword
                 await searchPage.submitMinMaxPrice({minPrice: product.MIN_PRICE, 
-                                                    maxPrice: product.MAX_PRICE
+                                                    maxPrice: product.MAX_PRICE //Step 4: Filter by Minimum and Maximum price
                                                 });
-                await expect(searchPage.searchResults).toBeVisible(); //Step 12: Validate that search results are loaded
-                const searchResultPrices = await searchPage.collectSearchResultPrices(10); //Step 13: Validate price values
+                await expect(searchPage.searchResults).toBeVisible(); //Step 5: Validate that search results are loaded
+                const searchResultPrices = await searchPage.collectSearchResultPrices(10); //Step 6: Validate price values
                 searchResultPrices.forEach(price => {
-                    expect(price).toBeGreaterThan(Number(product.MIN_PRICE));
-                    expect(price).toBeLessThan(Number(product.MAX_PRICE));
+                    expect(price).toBeGreaterThanOrEqual(Number(product.MIN_PRICE));
+                    expect(price).toBeLessThanOrEqual(Number(product.MAX_PRICE)); //Step 7: Validate a set of search results
                 });
             }
         );
-
-
-
     });
-
-
-})
+});

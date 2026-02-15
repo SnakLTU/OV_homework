@@ -8,9 +8,9 @@
     "test-ui-c": "npx playwright test tests/ui --project=chromium",
     "test-ui-f": "npx playwright test tests/ui --project=firefox",
     "test-api": "npx playwright test tests/api --project=chromium --workers=1",
-    "test-ci-cd-ui": "npx playwright test tests/ui --retries=3",
-    "test-ci-cd-api": "npx playwright test tests/api --project=chromium --workers=1 --retries=3",
-    "test-ci-cd-all": "npm run test-ci-cd-ui && npm run test-ci-cd-api"
+    "test-ci-cd-ui": "npx playwright test tests/ui --retries=3 --project=chromium --project=firefox --workers=4",
+    "test-ci-cd-api": "npx playwright test tests/api --retries=3 --project=api-tests --workers=1 ",
+    "test-ci-cd-all": "npm run test-ci-cd-api && npm run test-ci-cd-ui"
   },
   "repository": {
     "type": "git",

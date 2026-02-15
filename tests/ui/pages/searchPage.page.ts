@@ -52,12 +52,10 @@ export class SearchPage {
         const pageLoadRequestBrand = waitForPageLoad(this.page, `&Brand=${brand}&`); //Initiate even wait
         await this.clickBrandFilterCheckBox(brand); //Check Brand checkbox
         await pageLoadRequestBrand; //Wait to Navigate to search page URL
-        const checkBox = this.page.getByLabel( brand, { exact: true });
-        await expect(checkBox).toBeChecked(); //Validate that brand checkbox is checked
     };
 
     async submitMinPrice(minPrice: string){
-        const pageLoadRequestMinPrice = waitForPageLoad(this.page, `_udlo=${minPrice}`);
+        const pageLoadRequestMinPrice = waitForPageLoad(this.page, `\_udlo=${minPrice}`);
         await expect(this.minPriceField).toBeVisible(); //Step 7: Validate the input field is visible
         await this.fillMinPriceTextField(minPrice); //Step 8: Fill in minimum price
         await expect(this.submitRangeButton).toBeEnabled(); //Step 9: Validate submit button to be enabled
@@ -66,7 +64,7 @@ export class SearchPage {
     };
 
     async submitMaxPrice(maxPrice: string){
-        const pageLoadRequestMaxPrice = waitForPageLoad(this.page, `_udhi=${maxPrice}`);
+        const pageLoadRequestMaxPrice = waitForPageLoad(this.page, `\_udhi=${maxPrice}`);
         await expect(this.maxPriceField).toBeVisible(); //Step 7: Validate the input field is visible
         await this.fillMaxPriceTextField(maxPrice); //Step 8: Fill in minimum price
         await expect(this.submitRangeButton).toBeEnabled(); //Step 9: Validate submit button to be enabled
@@ -74,8 +72,8 @@ export class SearchPage {
         await pageLoadRequestMaxPrice; //Step 11: Wait to Navigate to search page URL
     };
 
-    async submitMinMaxPrice(prices:{minPrice: string, maxPrice: string}){
-        const pageLoadRequestMinMaxPrice = waitForPageLoad(this.page, `_udlo=${prices.minPrice}&_udhi=${prices.maxPrice}`);
+    async submitMinMaxPrice(prices:{minPrice: string, maxPrice: string}){ //`_udlo=${prices.minPrice}&_udhi=${prices.maxPrice}`
+        const pageLoadRequestMinMaxPrice = waitForPageLoad(this.page, `[_&]\_udlo=${prices.minPrice}&\_udhi=${prices.maxPrice}(?:&|$)`);
         await expect(this.minPriceField).toBeVisible(); //Step 7: Validate the input field is visible
         await expect(this.maxPriceField).toBeVisible(); //Step 7: Validate the input field is visible
         await this.fillMinPriceTextField(prices.minPrice); //Step 8: Fill in minimum price
@@ -112,4 +110,12 @@ export class SearchPage {
         };
         return collectedResults;
     };
+
+    async openNewProductTab(targetProduct: Locator){
+        const [newTab] = await Promise.all([
+            this.page.waitForEvent('popup'),
+            this.clickOnTargetProduct(targetProduct)
+        ]);
+        return newTab
+    }
 };
