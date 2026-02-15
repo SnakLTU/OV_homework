@@ -31,7 +31,7 @@ test.describe('Search and filter functionality Test Suite', () => {
                 await productPage.clickAddToCart(); //Step 11: Add item to cart
                 await expect(productPage.seeInCartButton).toBeVisible(); //Step 12: Validate added to cart dialog
                 await productPage.clickCloseAddToCartDialog(); //Step 13: Close the added to cart dialog
-                await productPage.removeItemFromCart() //Step 14: Remove from cart, in page header cart module
+                await productPage.removeItemFromCart(); //Step 14: Remove from cart, in page header cart module
                 });
         });
 });
